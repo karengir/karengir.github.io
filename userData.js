@@ -1,6 +1,8 @@
 let userData = '';
 const content = document.querySelector('#userList');
 const userposts = document.querySelector('#userPosts');
+const usersPage = document.getElementById('users_page');
+const postsPage = document.getElementById('posts_page');
 
 const fetch_User_data = () => {
     fetch(' https://jsonplaceholder.typicode.com/users')
@@ -19,26 +21,37 @@ const userDataChange = (data) => {
         user_row += '<tr>'
         user_row += `<td>${user.name}</td>`
         user_row += `<td>${user.email}</td>`
-        user_row += `<td> <button onClick="get_users_posts(${user.id})">Posts</button> </td>`
+        user_row += `<td> <button class="button" onClick="get_users_posts(${user.id},'${user.name}')">Posts</button> </td>`
         user_row += '</tr>'
         content.innerHTML += user_row
     })
 }
 
-const get_users_posts = (user_id) => {
+const get_users_posts = (user_id, user_name) => {
     fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user_id}`)
         .then((response) => response.json())
         .then((json) => {
-            userPostChange(json)
+            userPostChange(json, user_name)
         });
 
 }
 
-const userPostChange = (posts) => {
-    userposts.innerHTML = ""
+const show_posts_page = () => {
+    usersPage.style.display = 'none'
+    postsPage.style.display = 'block'
+}
+
+const show_users_page = () => {
+    usersPage.style.display = 'block'
+    postsPage.style.display = 'none'
+}
+
+const userPostChange = (posts, author) => {
+    document.getElementById('author').innerText = `${author}'s Posts`
+    userposts.innerHTML = ``
     posts.forEach(post => {
         let user_post = `
-        <div class="card column" id="post_card">
+        <div class="card" id="post_card">
         <div class="card-header">
             <h3>${post.title}</h3>
         </div>
@@ -48,4 +61,5 @@ const userPostChange = (posts) => {
     </div>`
         userposts.innerHTML += user_post
     })
+    show_posts_page()
 }

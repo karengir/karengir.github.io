@@ -9,15 +9,21 @@
 </head>
 
 <body>
-    <h3>User's list</h3>
-    <div class="content">
-        <div >
-            <table class="styled-table">
-                <tbody id="userList">
-                </tbody>
-            </table>
+    <div class="content" id="users">
+        <div id="users_page">
+            <h3>User's list</h3>
+            <div>
+                <table class="styled-table">
+                    <tbody id="userList">
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div id="userPosts" class="row">
+        <div id="posts_page" style="display: none; margin-top:5vh">
+            <button onClick="show_users_page()" class="button">Back to users</button>
+            <h3 id="author"></h3>
+            <div id="userPosts" class="row posts">
+            </div>
         </div>
     </div>
     <script src="userData.js"></script>
